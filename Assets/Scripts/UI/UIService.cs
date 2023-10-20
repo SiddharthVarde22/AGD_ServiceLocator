@@ -9,10 +9,8 @@ using ServiceLocator.Player;
 
 namespace ServiceLocator.UI
 {
-    public class UIService : MonoBehaviour
+    public class UIService : GenericSingleton<UIService>
     {
-        public static UIService Instance { get; private set; }
-
         [SerializeField] private EventService eventService;
 
         [Header("Gameplay Panel")]
@@ -39,18 +37,6 @@ namespace ServiceLocator.UI
         [SerializeField] private TextMeshProUGUI gameEndText;
         [SerializeField] private Button playAgainButton;
         [SerializeField] private Button quitButton;
-
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {

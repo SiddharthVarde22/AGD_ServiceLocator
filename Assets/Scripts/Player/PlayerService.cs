@@ -7,10 +7,8 @@ using ServiceLocator.Sound;
 
 namespace ServiceLocator.Player
 {
-    public class PlayerService : MonoBehaviour
+    public class PlayerService : GenericSingleton<PlayerService>
     {
-        public static PlayerService Instance { get; private set; }
-
         [SerializeField] public PlayerScriptableObject playerScriptableObject;
 
         private ProjectilePool projectilePool;
@@ -19,18 +17,6 @@ namespace ServiceLocator.Player
         private MonkeyView selectedMonkeyView;
         private int health;
         public int Money { get; private set; }
-
-        private void Awake()
-        {
-            if(Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
 
         private void Start()
         {
