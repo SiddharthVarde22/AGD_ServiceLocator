@@ -9,10 +9,11 @@ namespace ServiceLocator.Player
 {
     public class PlayerService : MonoBehaviour
     {
+        public static PlayerService Instance { get; private set; }
+
         [SerializeField] private UIService uiService;
         [SerializeField] private MapService mapService;
         [SerializeField] private SoundService soundService;
-        [SerializeField] private PlayerService playerService;
 
         [SerializeField] public PlayerScriptableObject playerScriptableObject;
 
@@ -23,9 +24,21 @@ namespace ServiceLocator.Player
         private int health;
         public int Money { get; private set; }
 
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void Start()
         {
-            projectilePool = new ProjectilePool(playerService, playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
+            projectilePool = new ProjectilePool(playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
             InitializeVariables();
         }
 
