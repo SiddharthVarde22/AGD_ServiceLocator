@@ -5,9 +5,23 @@ namespace ServiceLocator.Sound
 {
     public class SoundService : MonoBehaviour
     {
+        public static SoundService Instance { get; private set; }
+
         [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private AudioSource audioEffects;
         [SerializeField] private AudioSource backgroundMusic;
+
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {

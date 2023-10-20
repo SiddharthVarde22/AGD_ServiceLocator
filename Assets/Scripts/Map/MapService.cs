@@ -8,6 +8,8 @@ namespace ServiceLocator.Map
 {
     public class MapService : MonoBehaviour
     {
+        public static MapService Instance { get; private set; }
+
         [SerializeField] private EventService eventService;
         [SerializeField] private MapScriptableObject mapScriptableObject;
 
@@ -15,6 +17,18 @@ namespace ServiceLocator.Map
         private Tilemap currentTileMap;
         private MapData currentMapData;
         private SpriteRenderer tileOverlay;
+
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
