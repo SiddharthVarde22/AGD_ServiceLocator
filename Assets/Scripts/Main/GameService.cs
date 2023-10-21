@@ -40,11 +40,18 @@ namespace ServiceLocator.Main
             WaveService = new WaveService(waveScriptableObject);
             SoundService = new SoundService(soundScriptableObject, SFXSource, BGSource);
             PlayerService = new PlayerService(playerScriptableObject);
+
+            InjectDependencies();
         }
 
         private void Update()
         {
             PlayerService.Update();
+        }
+
+        private void InjectDependencies()
+        {
+            PlayerService.Init(uiService, MapService, SoundService);
         }
     }
 }
