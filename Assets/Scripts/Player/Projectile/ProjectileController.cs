@@ -1,6 +1,7 @@
 using UnityEngine;
 using ServiceLocator.Wave.Bloon;
 using ServiceLocator.Main;
+using ServiceLocator.Player;
 
 namespace ServiceLocator.Player.Projectile
 {
@@ -11,9 +12,12 @@ namespace ServiceLocator.Player.Projectile
 
         private BloonController target;
         private ProjectileState currentState;
+        private PlayerService playerService;
 
-        public ProjectileController(ProjectileView projectilePrefab, Transform projectileContainer)
+
+        public ProjectileController(ProjectileView projectilePrefab, Transform projectileContainer, PlayerService playerService)
         {
+            this.playerService = playerService;
             projectileView = Object.Instantiate(projectilePrefab, projectileContainer);
             projectileView.SetController(this);
         }
@@ -62,7 +66,7 @@ namespace ServiceLocator.Player.Projectile
         {
             target = null;
             projectileView.gameObject.SetActive(false);
-            GameService.Instance.PlayerService.ReturnProjectileToPool(this);
+            playerService.ReturnProjectileToPool(this);
         }
 
         private void SetState(ProjectileState newState) => currentState = newState;
